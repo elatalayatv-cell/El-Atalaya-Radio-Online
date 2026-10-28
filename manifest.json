@@ -1,0 +1,32 @@
+{
+  "name": "El Atalaya Radio oficial",
+  "short_name": "El Atalaya",
+  "description": "Radio TV Pentecostal Cipolletti - Escuchá en vivo",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eef1f6",
+  "theme_color": "#c9932f",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "https://i.postimg.cc/bY3YDMC5/Radial-El-Atalaya.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://i.postimg.cc/bY3YDMC5/Radial-El-Atalaya.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://i.postimg.cc/bY3YDMC5/Radial-El-Atalaya.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
