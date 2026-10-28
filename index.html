@@ -543,17 +543,17 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <!-- SECCIONES AGREGADAS PARA EL MENÚ -->
   <section class="extra-section" id="noticias">
     <h2>Noticias</h2>
-    <p>Próximamente encontrarás aquí las últimas noticias y novedades de nuestra comunidad.</p>
+    <p id="txtNoticiasWeb">Próximamente encontrarás aquí las últimas noticias y novedades de nuestra comunidad.</p>
   </section>
 
   <section class="extra-section" id="programacion">
     <h2>Programación</h2>
-    <p>Muy pronto podrás consultar la grilla completa de programas y horarios de El Atalaya Radio.</p>
+    <p id="txtProgramacionWeb">Muy pronto podrás consultar la grilla completa de programas y horarios de El Atalaya Radio.</p>
   </section>
 
   <section class="extra-section" id="devocional">
     <h2>Devocional</h2>
-    <p>Un espacio para reflexionar y alimentar tu espíritu. Próximamente, devocionales diarios en audio y texto.</p>
+    <p id="txtDevocionalWeb">Un espacio para reflexionar y alimentar tu espíritu. Próximamente, devocionales diarios en audio y texto.</p>
   </section>
 
   <p class="copyright" id="copyrightText">
@@ -598,7 +598,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       Radio en vivo
     </a></li>
     
-    <li><a href="EL ATALAYA TV.html" target="_blank">
+    <!-- ID AGREGADO AL BOTÓN DE TV -->
+    <li><a href="EL ATALAYA TV.html" target="_blank" id="menuTVLink">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2.5" y="6" width="19" height="13" rx="2.5"></rect><path d="m8 3 4 3 4-3"></path></svg>
       TV en vivo
     </a></li>
@@ -763,9 +764,15 @@ function showToast(msg){
         }
       }
 
-      if (cfg.streams && cfg.streams.radioUrl){
-        STREAM_URL = cfg.streams.radioUrl;
-        document.querySelector('#radioAudio source').src = STREAM_URL;
+      if (cfg.streams){
+        if (cfg.streams.radioUrl){
+          STREAM_URL = cfg.streams.radioUrl;
+          document.querySelector('#radioAudio source').src = STREAM_URL;
+        }
+        // ACTUALIZAR EL ENLACE DE LA TV
+        if (cfg.streams.tvUrl){
+          document.getElementById('menuTVLink').href = cfg.streams.tvUrl;
+        }
       }
 
       if (cfg.redes){
@@ -776,6 +783,13 @@ function showToast(msg){
         if (cfg.redes.whatsapp) {
           document.getElementById('linkWa').href = 'https://wa.me/' + cfg.redes.whatsapp;
         }
+      }
+
+      // ACTUALIZAR TEXTOS DE LAS SECCIONES
+      if (cfg.contenido) {
+        if (cfg.contenido.noticias) document.getElementById('txtNoticiasWeb').textContent = cfg.contenido.noticias;
+        if (cfg.contenido.programacion) document.getElementById('txtProgramacionWeb').textContent = cfg.contenido.programacion;
+        if (cfg.contenido.devocional) document.getElementById('txtDevocionalWeb').textContent = cfg.contenido.devocional;
       }
       
       console.log('✅ Configuración cargada desde el Admin');
