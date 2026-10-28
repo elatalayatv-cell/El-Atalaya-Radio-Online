@@ -698,14 +698,30 @@ audio.addEventListener('error',   () => {
 });
 
 document.getElementById('shareBtn').addEventListener('click', async () => {
-  const shareData = { title: RADIO_NAME, text: 'Escuchá ' + RADIO_NAME + ' en vivo', url: window.location.href };
-  if (navigator.share){
-    try { await navigator.share(shareData); } catch(e){ }
-  } else {
-    try { await navigator.clipboard.writeText(window.location.href); showToast('¡Enlace copiado!'); } catch(e){ showToast('Compartí: ' + window.location.href); }
+  const url = window.location.href;
+  const texto = encodeURIComponent('Escuchá ' + RADIO_NAME + ' en vivo: ' + url);
+  const shareData = { title: RADIO_NAME, text: 'Escuchá ' + RADIO_NAME + ' en vivo', url: url };
+
+  // Intentar con el menú nativo de compartir
+  if (navigator.share) {
+    try { 
+      await navigator.share(shareData); 
+      return; // Si funcionó, terminamos acá
+    } catch(e) { 
+      // Si falla, sigue al plan B
+    }
+  }
+
+  // Plan B: Copiar al portapapeles
+  try { 
+    await navigator.clipboard.writeText(url); 
+    showToast('¡Enlace copiado!'); 
+  } catch(e) { 
+    // Plan C: Si todo falla (típico en apps), abrimos WhatsApp directamente
+    window.open('https://wa.me/?text=' + texto, '_blank');
+    showToast('Abriendo WhatsApp para compartir...');
   }
 });
-
 let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
 document.getElementById('installBtn').addEventListener('click', async () => {
