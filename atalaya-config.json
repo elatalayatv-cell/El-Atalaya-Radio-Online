@@ -6,11 +6,11 @@
   },
   "streams": {
     "radioUrl": "https://radiohost.com.ar/8012/stream",
-    "tvUrl": "<iframe src=\"https://stmv5.liveplushd.com.br/elatalaya/elatalaya/playlist.m3u8/tv/index.html\"></iframe>"
+    "tvUrl": "tv.html"
   },
   "contenido": {
-    "noticias": "",
-    "programacion": "",
+    "noticias": "Bienvenidos a la sección de noticias de El Atalaya. Aquí encontrarás las últimas novedades de nuestra comunidad, eventos, campañas y todo lo que necesitás saber para mantenerte informado. ¡Muy pronto estaremos actualizando esta sección con contenido en vivo!",
+    "programacion": "Nuestra grilla de programación está diseñada para acompañarte todos los días.\nLunes a Viernes: De 8:00 a 10:00 hs Un Nuevo Amanecer, de 11:00 a 13:00 hs Metanoia, y por la tarde Efecto Un Más y Feedback.\nFines de semana: Disfrutá de Mejor Que Ayer, El Faro y nuestra selección de música y reflexión.\"",
     "devocional": ""
   }
 }
