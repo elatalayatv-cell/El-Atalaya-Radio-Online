@@ -78,14 +78,23 @@
               <label class="block text-sm font-medium text-gray-400 mb-1">URL del Logo</label>
               <input type="url" id="logo" class="w-full bg-gray-900 border border-gray-800 rounded-xl px-4 py-3 focus:ring-2 focus:ring-accent-500 focus:outline-none">
             </div>
+          </div>
+
+          <div class="glass p-6 rounded-2xl space-y-4">
+            <h3 class="text-xl font-semibold mb-4 border-b border-gray-800 pb-2">Señales (Audio y Video)</h3>
             <div>
-              <label class="block text-sm font-medium text-gray-400 mb-1">URL de la Radio (Stream)</label>
+              <label class="block text-sm font-medium text-gray-400 mb-1">URL de la Radio (Stream MP3)</label>
               <input type="url" id="radioUrl" class="w-full bg-gray-900 border border-gray-800 rounded-xl px-4 py-3 focus:ring-2 focus:ring-accent-500 focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-400 mb-1">URL de la TV (Enlace .m3u8 o página TV.html)</label>
+              <input type="url" id="tvUrl" class="w-full bg-gray-900 border border-gray-800 rounded-xl px-4 py-3 focus:ring-2 focus:ring-accent-500 focus:outline-none">
+              <p class="text-xs text-gray-500 mt-1">Ej: EL ATALAYA TV.html (o un enlace de transmisión directo).</p>
             </div>
           </div>
         </div>
 
-        <!-- TAB CONTENIDO (NUEVO) -->
+        <!-- TAB CONTENIDO -->
         <div id="tab-contenido" class="tab-content hidden space-y-6">
           <div class="glass p-6 rounded-2xl space-y-4">
             <h3 class="text-xl font-semibold mb-4 border-b border-gray-800 pb-2">Textos de las Secciones</h3>
@@ -151,6 +160,7 @@
         }
         if(data.streams) {
           document.getElementById('radioUrl').value = data.streams.radioUrl || '';
+          document.getElementById('tvUrl').value = data.streams.tvUrl || 'EL ATALAYA TV.html';
         }
         if(data.contenido) {
           document.getElementById('txtNoticias').value = data.contenido.noticias || '';
@@ -159,10 +169,10 @@
         }
       }
     } catch(e) {
-      // Placeholders
       document.getElementById('siteName').value = 'El Atalaya Radio oficial';
       document.getElementById('tagline').value = 'Radio TV Pentecostal';
       document.getElementById('radioUrl').value = 'https://radiohost.com.ar/8012/stream';
+      document.getElementById('tvUrl').value = 'EL ATALAYA TV.html';
     }
   }
 
@@ -174,7 +184,8 @@
         logo: document.getElementById('logo').value
       },
       streams: {
-        radioUrl: document.getElementById('radioUrl').value
+        radioUrl: document.getElementById('radioUrl').value,
+        tvUrl: document.getElementById('tvUrl').value // <-- NUEVO CAMPO
       },
       contenido: {
         noticias: document.getElementById('txtNoticias').value,
