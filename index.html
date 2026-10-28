@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>El Atalaya— Escuchar en vivo</title>
+<meta name="description" content="Escuchá Radio oficial en vivo. Radio TV Pentecostal Cipolletti.">
+<link rel="icon" type="image/png" href="https://i.postimg.cc/bY3YDMC5/Radial-El-Atalaya.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:linear-gradient(180deg,#eef1f6 0%,#e4e9f2 100%);
+  min-height:100vh;
+  color:#1a2332;
+  padding-bottom:110px;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+/* ═══ HEADER ═══ */
+.header{
+  padding:18px 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  max-width:640px;
+  margin:0 auto;
+}
+.header-brand{
+  font-family:'Fraunces',serif;
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:-.02em;
+  color:#0b1e3a;
+}
+.header-brand span{
+  background:linear-gradient(140deg,#c9932f,#e5b95f);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.header-menu{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:rgba(255,255,255,.7);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(10,16,23,.06);
+  color:#4a5568;
+  transition:.2s;
+}
+.header-menu:hover{background:#fff;color:#0b1e3a}
+.header-menu svg{width:20px;height:20px}
+
+/* ═══ CONTENIDO PRINCIPAL ═══ */
+.main{
+  max-width:640px;
+  margin:0 auto;
+  padding:8px 22px 40px;
+  text-align:center;
+}
+
+.radio-category{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:#6b7684;
+  margin-bottom:8px;
+}
+.radio-category i{
+  font-style:normal;
+  color:#c9932f;
+}
+.radio-title{
+  font-family:'Fraunces',serif;
+  font-size:32px;
+  font-weight:700;
+  letter-spacing:-.03em;
+  color:#0b1e3a;
+  margin-bottom:26px;
+}
+
+.cover-card{
+  background:#fff;
+  border-radius:28px;
+  padding:32px 24px;
+  margin-bottom:26px;
+  box-shadow: 0 1px 3px rgba(10,16,23,.04), 0 12px 40px -16px rgba(10,16,23,.18);
+  position:relative;
+  overflow:hidden;
+}
+.cover-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,#c9932f,#e5b95f,#f0cd85);
+}
+
+.cover{
+  width:200px;
+  height:200px;
+  border-radius:50%;
+  margin:0 auto 24px;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(140deg,#0b1e3a,#1e4a80);
+  box-shadow: 0 8px 24px -8px rgba(11,30,58,.4), 0 16px 48px -16px rgba(11,30,58,.3);
+  border:4px solid #fff;
+  outline:2px solid rgba(201,147,47,.3);
+  transition:transform .5s cubic-bezier(.2,.8,.2,1);
+}
+.cover img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.cover.playing{
+  animation:coverPulse 3s ease-in-out infinite;
+}
+@keyframes coverPulse{
+  0%,100%{transform:scale(1);box-shadow:0 8px 24px -8px rgba(11,30,58,.4),0 16px 48px -16px rgba(11,30,58,.3)}
+  50%{transform:scale(1.03);box-shadow:0 8px 24px -8px rgba(201,147,47,.5),0 20px 60px -16px rgba(201,147,47,.5)}
+}
+
+.radio-subtitle{
+  font-size:14.5px;
+  color:#6b7684;
+  font-weight:500;
+  margin-bottom:4px;
+}
+.radio-location{
+  font-size:12.5px;
+  color:#9099a8;
+  font-weight:500;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+}
+.radio-location svg{width:12px;height:12px;color:#c9932f}
+
+.actions{
+  display:flex;
+  gap:12px;
+  margin-top:24px;
+  justify-content:center;
+  align-items:center;
+}
+
+.btn-play{
+  width:68px;
+  height:68px;
+  border-radius:50%;
+  background:linear-gradient(140deg,#1e4a80,#0b1e3a);
+  color:#fff;
+  display:grid;
+  place-items:center;
+  box-shadow: 0 8px 20px -6px rgba(11,30,58,.5), 0 12px 32px -12px rgba(11,30,58,.4);
+  transition:transform .25s cubic-bezier(.2,.8,.2,1);
+  flex-shrink:0;
+  position:relative;
+}
+.btn-play:hover{transform:scale(1.06)}
+.btn-play:active{transform:scale(.96)}
+.btn-play svg{width:26px;height:26px}
+.btn-play .ic-play{margin-left:3px}
+.btn-play .ic-pause{display:none}
+.btn-play.playing .ic-play{display:none}
+.btn-play.playing .ic-pause{display:block}
+.btn-play.playing::after{
+  content:'';
+  position:absolute;
+  inset:-4px;
+  border-radius:50%;
+  border:2px solid #c9932f;
+  animation:pulseRing 2s ease-out infinite;
+  pointer-events:none;
+}
+@keyframes pulseRing{
+  0%{transform:scale(1);opacity:.8}
+  100%{transform:scale(1.4);opacity:0}
+}
+
+.btn-share{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:14px 26px;
+  border-radius:999px;
+  background:#fff;
+  color:#1a2332;
+  font-weight:700;
+  font-size:15px;
+  box-shadow:0 4px 12px -4px rgba(10,16,23,.12);
+  transition:.2s;
+  border:1px solid rgba(10,16,23,.05);
+}
+.btn-share:hover{transform:translateY(-2px);box-shadow:0 8px 20px -6px rgba(10,16,23,.15)}
+.btn-share svg{width:16px;height:16px}
+
+.btn-install{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:14px 26px;
+  border-radius:999px;
+  background:#fff;
+  color:#1a2332;
+  font-weight:700;
+  font-size:15px;
+  margin-top:12px;
+  width:100%;
+  max-width:320px;
+  box-shadow:0 4px 12px -4px rgba(10,16,23,.12);
+  transition:.2s;
+  border:1px solid rgba(10,16,23,.05);
+}
+.btn-install:hover{transform:translateY(-2px);box-shadow:0 8px 20px -6px rgba(10,16,23,.15)}
+.btn-install svg{width:18px;height:18px}
+
+.socials{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  margin:30px 0 20px;
+  flex-wrap:wrap;
+}
+.socials a{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#fff;
+  color:#4a5568;
+  transition:.25s;
+  box-shadow:0 2px 8px -3px rgba(10,16,23,.1);
+  border:1px solid rgba(10,16,23,.04);
+}
+.socials a:hover{
+  transform:translateY(-3px);
+  color:#c9932f;
+  box-shadow:0 8px 20px -6px rgba(201,147,47,.3);
+}
+.socials a svg{width:18px;height:18px}
+
+.copyright{
+  font-size:12px;
+  color:#9099a8;
+  text-align:center;
+  line-height:1.6;
+  padding:0 20px;
+}
+.copyright strong{
+  color:#4a5568;
+  font-weight:600;
+}
+
+.sticky-player{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:linear-gradient(90deg,#c9932f 0%,#e5b95f 100%);
+  padding:12px 18px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  box-shadow:0 -8px 32px -8px rgba(10,16,23,.2);
+  z-index:100;
+  transition:transform .4s cubic-bezier(.2,.8,.2,1);
+}
+.sticky-player.hidden{transform:translateY(120%)}
+.sp-logo{
+  width:48px;
+  height:48px;
+  border-radius:12px;
+  overflow:hidden;
+  flex-shrink:0;
+  background:#0b1e3a;
+  box-shadow:0 4px 12px -4px rgba(0,0,0,.3);
+}
+.sp-logo img{width:100%;height:100%;object-fit:cover;display:block}
+.sp-info{
+  flex:1;
+  min-width:0;
+  text-align:left;
+  color:#fff;
+}
+.sp-label{
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  opacity:.85;
+  margin-bottom:2px;
+}
+.sp-title{
+  font-size:14px;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.sp-sub{
+  font-size:11.5px;
+  opacity:.8;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.sp-play{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:#fff;
+  color:#c9932f;
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+  box-shadow:0 4px 12px -4px rgba(0,0,0,.25);
+  transition:transform .2s;
+}
+.sp-play:hover{transform:scale(1.05)}
+.sp-play svg{width:20px;height:20px}
+.sp-play .ic-play{margin-left:2px}
+.sp-play .ic-pause{display:none}
+.sp-play.playing .ic-play{display:none}
+.sp-play.playing .ic-pause{display:block}
+
+.menu-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(10,16,23,.5);
+  backdrop-filter:blur(8px);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .3s;
+  z-index:200;
+}
+.menu-overlay.open{opacity:1;pointer-events:auto}
+
+.menu-drawer{
+  position:fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  width:min(320px,85vw);
+  background:#fff;
+  z-index:201;
+  padding:24px;
+  transform:translateX(100%);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1);
+  overflow-y:auto;
+  box-shadow:-12px 0 40px -12px rgba(10,16,23,.25);
+}
+.menu-drawer.open{transform:translateX(0)}
+.menu-drawer-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:28px;
+  padding-bottom:20px;
+  border-bottom:1px solid #eef1f6;
+}
+.menu-drawer-header h3{
+  font-family:'Fraunces',serif;
+  font-size:20px;
+  color:#0b1e3a;
+  font-weight:600;
+}
+.menu-close{
+  width:38px;
+  height:38px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  background:#eef1f6;
+  color:#4a5568;
+  transition:.2s;
+}
+.menu-close:hover{background:#e4e9f2}
+.menu-close svg{width:18px;height:18px}
+
+.menu-list{list-style:none}
+.menu-list li{margin-bottom:6px}
+.menu-list a{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px 16px;
+  border-radius:12px;
+  color:#4a5568;
+  font-weight:600;
+  font-size:15px;
+  transition:.2s;
+}
+.menu-list a:hover{background:#eef1f6;color:#0b1e3a}
+.menu-list a svg{width:20px;height:20px;color:#c9932f;flex-shrink:0}
+.menu-list a.active{
+  background:linear-gradient(140deg,#c9932f,#e5b95f);
+  color:#fff;
+}
+.menu-list a.active svg{color:#fff}
+
+.toast{
+  position:fixed;
+  bottom:90px;
+  left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:#0b1e3a;
+  color:#fff;
+  padding:14px 22px;
+  border-radius:14px;
+  font-size:14px;
+  font-weight:600;
+  box-shadow:0 12px 32px -10px rgba(0,0,0,.4);
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
+  z-index:300;
+  max-width:calc(100% - 40px);
+  text-align:center;
+}
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+@media (max-width:480px){
+  .radio-title{font-size:26px}
+  .cover{width:170px;height:170px}
+  .cover-card{padding:26px 20px}
+  .btn-play{width:60px;height:60px}
+  .btn-play svg{width:24px;height:24px}
+  .btn-share{padding:12px 20px;font-size:14px}
+  .btn-install{padding:12px 20px;font-size:14px}
+  .socials{gap:10px}
+  .socials a{width:38px;height:38px}
+  .socials a svg{width:16px;height:16px}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-brand" id="headerBrand">EL <span>ATALAYA</span></div>
+  <button class="header-menu" id="menuBtn" aria-label="Menú">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <path d="M4 7h16M4 12h16M4 17h16"></path>
+    </svg>
+  </button>
+</header>
+
+<main class="main">
+
+  <div class="radio-category">RADIO <i>|</i></div>
+  <h1 class="radio-title" id="radioName">El Atalaya Radio oficial</h1>
+
+  <div class="cover-card">
+    <div class="cover" id="cover">
+      <img id="coverImg" src="https://i.postimg.cc/bY3YDMC5/Radial-El-Atalaya.png" alt="El Atalaya Radio oficial">
+    </div>
+
+    <p class="radio-subtitle" id="radioSubtitle">Radio TV Pentecostal</p>
+    <p class="radio-location">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+      Cipolletti, Argentina
+    </p>
+
+    <div class="actions">
+      <button class="btn-play" id="playBtn" aria-label="Reproducir">
+        <svg class="ic-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.2v13.6L19 12z"></path></svg>
+        <svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3.4v14H7zM13.6 5H17v14h-3.4z"></path></svg>
+      </button>
+      <button class="btn-share" id="shareBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"></path></svg>
+        Compartir
+      </button>
+    </div>
+
+    <button class="btn-install" id="installBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></svg>
+      Instalar aplicación
+    </button>
+  </div>
+
+  <!-- Redes sociales con IDs para el panel -->
+  <div class="socials">
+    <a href="https://www.facebook.com/elatalayaradio" target="_blank" rel="noopener" aria-label="Facebook" id="linkFb">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"></path></svg>
+    </a>
+    <a href="https://www.instagram.com/elatalayaradio" target="_blank" rel="noopener" aria-label="Instagram" id="linkIg">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="3.6"></circle><circle cx="17.2" cy="6.8" r="1" fill="currentColor"></circle></svg>
+    </a>
+    <a href="https://www.tiktok.com/@elatalayaradio" target="_blank" rel="noopener" aria-label="TikTok" id="linkTt">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 6.7c-1.2-.8-2.1-2.1-2.3-3.6h-3v13.2a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .9.1V10.4a6 6 0 0 0-.9-.1 6 6 0 1 0 6 6V9.9c1.1.8 2.5 1.3 4 1.3V8.3c-.6 0-1.2-.2-1.8-.5z"></path></svg>
+    </a>
+    <a href="https://wa.me/5492995932329" target="_blank" rel="noopener" aria-label="WhatsApp" id="linkWa">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.1 14c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.7-1.2-4.5-4-4.6-4.2-.1-.2-1.1-1.4-1.1-2.7s.7-1.9.9-2.2c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.1.3.6 1.1 1.4 1.8 1 .8 1.7 1.1 2 1.2.3.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.8-.1 1.4z"></path></svg>
+    </a>
+    <a href="https://www.youtube.com/@elatalayaradio" target="_blank" rel="noopener" aria-label="YouTube" id="linkYt">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12s0-3.3-.4-4.9a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.1C2 8.7 2 12 2 12s0 3.3.4 4.9a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8C22 15.3 22 12 22 12zM10 15V9l5.2 3z"></path></svg>
+    </a>
+  </div>
+
+  <p class="copyright" id="copyrightText">
+    <strong>© <span id="year"></span> El Atalaya Radio oficial</strong><br>
+    Todos los derechos reservados
+  </p>
+
+</main>
+
+<div class="sticky-player" id="stickyPlayer">
+  <div class="sp-logo">
+    <img src="https://i.postimg.cc/bY3YDMC5/Radial-El-Atalaya.png" alt="Logo" id="spLogoImg">
+  </div>
+  <div class="sp-info">
+    <div class="sp-label">Estás escuchando</div>
+    <div class="sp-title" id="spTitle">El Atalaya Radio</div>
+    <div class="sp-sub" id="spSub">Radio TV Pentecostal · Cipolletti</div>
+  </div>
+  <button class="sp-play" id="stickyPlay" aria-label="Reproducir">
+    <svg class="ic-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.2v13.6L19 12z"></path></svg>
+    <svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3.4v14H7zM13.6 5H17v14h-3.4z"></path></svg>
+  </button>
+</div>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+<aside class="menu-drawer" id="menuDrawer">
+  <div class="menu-drawer-header">
+    <h3>Menú</h3>
+    <button class="menu-close" id="menuClose" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+    </button>
+  </div>
+  <ul class="menu-list">
+    <li><a href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12 12 3l9 9M5 10v10h14V10"></path></svg>
+      Página principal
+    </a></li>
+    <li><a href="radio.html" class="active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4.5 9.5a10 10 0 0 1 15 0M7.5 12.5a6 6 0 0 1 9 0M10.5 15.5a2.5 2.5 0 0 1 3 0"></path><circle cx="12" cy="18.5" r="1.3" fill="currentColor"></circle></svg>
+      Radio en vivo
+    </a></li>
+    <li><a href="EL ATALAYA TV.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2.5" y="6" width="19" height="13" rx="2.5"></rect><path d="m8 3 4 3 4-3"></path></svg>
+      TV en vivo
+    </a></li>
+  </ul>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<audio id="radioAudio" preload="none" crossorigin="anonymous">
+  <source src="https://radiohost.com.ar/8012/stream" type="audio/mpeg">
+</audio>
+
+<script>
+// Variables globales para que se actualicen desde el JSON
+let STREAM_URL = 'https://radiohost.com.ar/8012/stream';
+let RADIO_NAME = 'El Atalaya Radio oficial';
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const audio = document.getElementById('radioAudio');
+const playBtn = document.getElementById('playBtn');
+const stickyPlay = document.getElementById('stickyPlay');
+const cover = document.getElementById('cover');
+
+let playing = false;
+
+function togglePlay(){
+  if (!playing){
+    audio.src = STREAM_URL; // Usa la URL actualizada
+    audio.load();
+    const p = audio.play();
+    if (p !== undefined){
+      p.then(() => setPlaying(true))
+       .catch(err => {
+         if (err.name === 'NotAllowedError'){
+           showToast('Tocá de nuevo para reproducir');
+         } else {
+           showToast('No se pudo conectar con la radio');
+         }
+         setPlaying(false);
+       });
+    }
+  } else {
+    audio.pause();
+    audio.currentTime = 0;
+    setPlaying(false);
+  }
+}
+
+function setPlaying(state){
+  playing = state;
+  playBtn.classList.toggle('playing', state);
+  stickyPlay.classList.toggle('playing', state);
+  cover.classList.toggle('playing', state);
+  document.title = state ? '🔴 EN VIVO — ' + RADIO_NAME : RADIO_NAME + ' — Escuchar en vivo';
+}
+
+playBtn.addEventListener('click', togglePlay);
+stickyPlay.addEventListener('click', togglePlay);
+
+audio.addEventListener('playing', () => setPlaying(true));
+audio.addEventListener('pause',   () => setPlaying(false));
+audio.addEventListener('error',   () => {
+  setPlaying(false);
+  showToast('Error de conexión con la radio');
+});
+
+document.getElementById('shareBtn').addEventListener('click', async () => {
+  const shareData = { title: RADIO_NAME, text: 'Escuchá ' + RADIO_NAME + ' en vivo', url: window.location.href };
+  if (navigator.share){
+    try { await navigator.share(shareData); } catch(e){ }
+  } else {
+    try { await navigator.clipboard.writeText(window.location.href); showToast('¡Enlace copiado!'); } catch(e){ showToast('Compartí: ' + window.location.href); }
+  }
+});
+
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
+document.getElementById('installBtn').addEventListener('click', async () => {
+  if (deferredPrompt){
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted'){ showToast('¡App instalada!'); }
+    deferredPrompt = null;
+  } else {
+    showToast('Ya está instalada o usá "Añadir a pantalla de inicio"');
+  }
+});
+
+const menuBtn = document.getElementById('menuBtn');
+const menuDrawer = document.getElementById('menuDrawer');
+const menuOverlay = document.getElementById('menuOverlay');
+const menuClose = document.getElementById('menuClose');
+
+function abrirMenu(){ menuDrawer.classList.add('open'); menuOverlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
+function cerrarMenu(){ menuDrawer.classList.remove('open'); menuOverlay.classList.remove('open'); document.body.style.overflow = ''; }
+
+menuBtn.addEventListener('click', abrirMenu);
+menuClose.addEventListener('click', cerrarMenu);
+menuOverlay.addEventListener('click', cerrarMenu);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrarMenu(); });
+
+let toastTimeout;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+/* ═══════════ CARGA CONFIG DEL ADMIN (ACTUALIZADO) ═══════════ */
+(async function cargarConfig(){
+  try {
+    const res = await fetch('atalaya-config.json?_=' + Date.now(), { cache: 'no-store' });
+    if (res.ok){
+      const cfg = await res.json();
+      
+      // 1. Datos Generales
+      if (cfg.general){
+        if (cfg.general.siteName){
+          RADIO_NAME = cfg.general.siteName;
+          document.getElementById('radioName').textContent = RADIO_NAME;
+          document.getElementById('spTitle').textContent = RADIO_NAME;
+          document.title = RADIO_NAME + ' — Escuchar en vivo';
+          // Actualizar logo del header
+          const parts = RADIO_NAME.split(' ');
+          if(parts.length > 1) {
+             document.getElementById('headerBrand').innerHTML = parts[0].toUpperCase() + ' <span>' + parts.slice(1).join(' ').toUpperCase() + '</span>';
+          } else {
+             document.getElementById('headerBrand').textContent = RADIO_NAME.toUpperCase();
+          }
+          document.getElementById('copyrightText').innerHTML = `<strong>© <span id="year">${new Date().getFullYear()}</span> ${RADIO_NAME}</strong><br>Todos los derechos reservados`;
+        }
+        if (cfg.general.tagline){
+          document.getElementById('radioSubtitle').textContent = cfg.general.tagline;
+          document.getElementById('spSub').textContent = cfg.general.tagline + ' · Cipolletti';
+        }
+        if (cfg.general.logo){
+          document.getElementById('coverImg').src = cfg.general.logo;
+          document.getElementById('spLogoImg').src = cfg.general.logo;
+          document.querySelector('link[rel="icon"]').href = cfg.general.logo;
+        }
+      }
+
+      // 2. Stream
+      if (cfg.streams && cfg.streams.radioUrl){
+        STREAM_URL = cfg.streams.radioUrl;
+        document.querySelector('#radioAudio source').src = STREAM_URL;
+      }
+
+      // 3. Redes Sociales
+      if (cfg.redes){
+        if (cfg.redes.facebook) document.getElementById('linkFb').href = cfg.redes.facebook;
+        if (cfg.redes.instagram) document.getElementById('linkIg').href = cfg.redes.instagram;
+        if (cfg.redes.tiktok) document.getElementById('linkTt').href = cfg.redes.tiktok;
+        if (cfg.redes.youtube) document.getElementById('linkYt').href = cfg.redes.youtube;
+        if (cfg.redes.whatsapp) document.getElementById('linkWa').href = 'https://wa.me/' + cfg.redes.whatsapp;
+      }
+      
+      console.log('✅ Configuración cargada desde el Admin');
+    }
+  } catch(e){
+    console.log('⚠️ Usando configuración por defecto');
+  }
+})();
+</script>
+</body>
+</html>
