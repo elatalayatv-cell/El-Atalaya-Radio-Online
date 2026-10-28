@@ -1,1 +1,16 @@
-
+{
+  "general": {
+    "siteName": "El Atalaya Radio oficial",
+    "tagline": "Radio TV Pentecostal",
+    "logo": "https://i.postimg.cc/bY3YDMC5/Radial-El-Atalaya.png"
+  },
+  "streams": {
+    "radioUrl": "https://radiohost.com.ar/8012/stream",
+    "tvUrl": ""
+  },
+  "contenido": {
+    "noticias": "",
+    "programacion": "",
+    "devocional": ""
+  }
+}
