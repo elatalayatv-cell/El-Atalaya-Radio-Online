@@ -697,6 +697,7 @@ audio.addEventListener('error',   () => {
   showToast('Error de conexión con la radio');
 });
 
+/* ═══════════ BOTÓN COMPARTIR (CON PLAN B Y C) ═══════════ */
 document.getElementById('shareBtn').addEventListener('click', async () => {
   const url = window.location.href;
   const texto = encodeURIComponent('Escuchá ' + RADIO_NAME + ' en vivo: ' + url);
@@ -722,6 +723,13 @@ document.getElementById('shareBtn').addEventListener('click', async () => {
     showToast('Abriendo WhatsApp para compartir...');
   }
 });
+
+/* ═══════════ BOTÓN INSTALAR (Y OCULTARLO SI YA ES APP) ═══════════ */
+// Si ya estamos dentro de la app, ocultamos el botón de instalar
+if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
+  document.getElementById('installBtn').style.display = 'none';
+}
+
 let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
 document.getElementById('installBtn').addEventListener('click', async () => {
