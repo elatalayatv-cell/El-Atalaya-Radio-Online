@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>El Atalaya TV</title>
+<link rel="icon" type="image/png" href="https://i.postimg.cc/Dmkp3t85/Chat-GPT-Image-13-sept-2026-11-02-16-removebg-preview.png">
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
+<style>
+  *{box-sizing:border-box;font-family:system-ui,sans-serif;margin:0;padding:0}
+  html,body{height:100%;background:#000;color:#e8eaf0;overflow:hidden}
+
+  #splash{
+    position:fixed;inset:0;z-index:9999;
+    background:radial-gradient(circle at center,#0f1a35 0%,#000 100%);
+    display:flex;align-items:center;justify-content:center;
+    transition:opacity .8s ease;
+  }
+  #splash.hide{opacity:0;pointer-events:none}
+  #splash img{
+    width:70%;height:70%;object-fit:contain;display:block;
+    filter:drop-shadow(0 0 50px rgba(59,110,245,.7));
+    animation:zoomIn .8s ease;
+  }
+  @keyframes zoomIn{
+    from{transform:scale(.85);opacity:0}
+    to{transform:scale(1);opacity:1}
+  }
+
+  .videoWrap{
+    position:fixed;top:0;left:0;right:0;bottom:0;
+    background:#000;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .videoWrap video{
+    width:100%;height:100%;object-fit:cover;
+    background:#000;display:block;
+  }
+
+  /* ===== LOGO CON ANIMACIÓN POTENTE ===== */
+  .wmBox{
+    position:absolute;top:14px;right:14px;
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    pointer-events:none;z-index:10;
+  }
+  .wmBox img{
+    height:110px;width:auto;max-width:280px;object-fit:contain;
+    display:block;
+    animation:
+      logoFloat 3s ease-in-out infinite,
+      logoGlow 2s ease-in-out infinite;
+  }
+  .wmBox .wmClock{
+    color:#fff;font-size:16px;font-weight:700;
+    font-variant-numeric:tabular-nums;letter-spacing:.4px;
+    text-shadow:0 2px 6px rgba(0,0,0,.9);
+  }
+
+  /* Sube y baja */
+  @keyframes logoFloat{
+    0%,100%{ transform: translateY(0) scale(1); }
+    50%{ transform: translateY(-8px) scale(1.05); }
+  }
+
+  /* Brillo dorado pulsante */
+  @keyframes logoGlow{
+    0%,100%{
+      filter: drop-shadow(0 3px 12px rgba(0,0,0,.9))
+              drop-shadow(0 0 8px rgba(229,183,47,.6));
+    }
+    50%{
+      filter: drop-shadow(0 3px 12px rgba(0,0,0,.9))
+              drop-shadow(0 0 25px rgba(229,183,47,1))
+              drop-shadow(0 0 35px rgba(59,110,245,.8));
+    }
+  }
+
+  @media(max-width:700px){
+    .wmBox{top:6px;right:6px}
+    .wmBox img{height:55px;max-width:130px}
+    .wmBox .wmClock{font-size:11px}
+    #splash img{width:80%;height:80%}
+  }
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <img id="splashLogo" alt="El Atalaya TV Music">
+</div>
+
+<div class="videoWrap">
+  <video id="video" controls autoplay playsinline></video>
+  <div class="wmBox">
+    <img id="watermark" alt="">
+    <div class="wmClock" id="wmClock">🇦🇷 --:--:--</div>
+  </div>
+</div>
+
+<script>
+const LOGO_URL = "https://i.postimg.cc/Dmkp3t85/Chat-GPT-Image-13-sept-2026-11-02-16-removebg-preview.png";
+const STREAM_URL = "https://player.videohost.click/elatalaya/elatalaya/playlist.m3u8";
+const TIMEZONE = "America/Argentina/Buenos_Aires";
+
+let hls = null;
+function $(id){ return document.getElementById(id); }
+
+document.addEventListener('DOMContentLoaded', () => {
+  $('splashLogo').src = LOGO_URL;
+  $('watermark').src = LOGO_URL;
+  updateClock();
+  setInterval(updateClock, 1000);
+  playStream();
+  setTimeout(() => hideSplash(), 4000);
+});
+
+function hideSplash(){
+  const s = $('splash');
+  if (s && !s.classList.contains('hide')){
+    s.classList.add('hide');
+    setTimeout(()=> s.style.display = 'none', 800);
+  }
+}
+
+function updateClock(){
+  const now = new Date();
+  const opts = { timeZone: TIMEZONE, hour12: false };
+  const timeStr = new Intl.DateTimeFormat('es-AR', { ...opts, hour:'2-digit', minute:'2-digit', second:'2-digit' }).format(now);
+  const w = $('wmClock');
+  if (w) w.textContent = '🇦🇷 ' + timeStr;
+}
+
+function playStream(){
+  const video = $('video');
+  video.volume = 1.0;
+  video.muted = false;
+
+  if (window.Hls && Hls.isSupported()){
+    hls = new Hls({
+      lowLatencyMode: true,
+      liveSyncDurationCount: 3,
+      liveMaxLatencyDurationCount: 10,
+      enableWorker: true
+    });
+    hls.loadSource(STREAM_URL);
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED, () => {
+      video.volume = 1.0;
+      video.muted = false;
+      video.play().catch(()=>{});
+    });
+    hls.on(Hls.Events.ERROR, (_, data) => {
+      if (!data.fatal) return;
+      if (data.type === 'networkError') hls.startLoad();
+      else if (data.type === 'mediaError') hls.recoverMediaError();
+      else { hls.destroy(); hls = null; setTimeout(playStream, 3000); }
+    });
+  } else if (video.canPlayType('application/vnd.apple.mpegurl')){
+    video.src = STREAM_URL;
+    video.volume = 1.0;
+    video.play().catch(()=>{});
+  } else {
+    video.src = STREAM_URL;
+    video.volume = 1.0;
+    video.play().catch(()=>{});
+  }
+}
+</script>
+</body>
+</html>
