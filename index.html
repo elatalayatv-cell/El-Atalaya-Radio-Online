@@ -270,26 +270,37 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 
 /* ═══ SECCIONES EXTRA ═══ */
 .extra-section{
+ .extra-section{
   background:#fff;
   border-radius:20px;
-  padding:24px;
+  padding:28px;
   margin-top:20px;
   text-align:left;
-  box-shadow:0 4px 12px -4px rgba(10,16,23,.05);
+  box-shadow:0 10px 30px -10px rgba(11,30,58,.1);
+  border-left: 5px solid #c9932f; /* Borde dorado llamativo */
   scroll-margin-top: 20px;
 }
 .extra-section h2{
   font-family:'Fraunces',serif;
-  font-size:22px;
+  font-size:24px;
   color:#0b1e3a;
-  margin-bottom:12px;
-  border-bottom:2px solid #eef1f6;
-  padding-bottom:8px;
+  margin-bottom:16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.extra-section h2::after {
+  content: '';
+  flex-grow: 1;
+  height: 2px;
+  background: linear-gradient(90deg, #c9932f, transparent);
+  margin-left: 10px;
 }
 .extra-section p{
-  font-size:14px;
-  color:#6b7684;
-  line-height:1.6;
+  font-size:15px;
+  color:#4a5568;
+  line-height:1.7;
 }
 
 .sticky-player{
@@ -543,20 +554,38 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <!-- SECCIONES EXTRA -->
   <section class="extra-section" id="noticias">
     <h2>Noticias</h2>
-    <p id="txtNoticiasWeb">Bienvenidos a la sección de noticias de El Atalaya. Aquí encontrarás las últimas novedades de nuestra comunidad, eventos, campañas y todo lo que necesitás saber para mantenerte informado. ¡Muy pronto estaremos actualizando esta sección con contenido en vivo!</p>
+    <p id="txtNoticiasWeb">Bienvenidos a la sección de noticias de <strong style="color:#0b1e3a;">El Atalaya</strong>. Aquí encontrarás las últimas novedades de nuestra comunidad, eventos, campañas y todo lo que necesitás saber para mantenerte informado. <span style="color:#c9932f; font-weight:bold;">¡Muy pronto estaremos actualizando esta sección con contenido en vivo!</span></p>
   </section>
 
   <section class="extra-section" id="programacion">
     <h2>Programación</h2>
-    <p id="txtProgramacionWeb">Nuestra grilla de programación está diseñada para acompañarte todos los días.<br><br>
-    <b>Martes y Jueves:</b> De 8:00 a 9:00 hs <i>Un Nuevo Amanecer</i>, de 11:00 a 13:00 hs <i>Metanoia</i>, y por la tarde <i>Efecto Un Más</i> y <i>Feedback</i>.<br>
-    <b>Fines de semana:</b> Disfrutá de <i>Mejor Que Ayer</i>, <i>El Faro</i> y nuestra selección de música y reflexión.</p>
+    <div id="txtProgramacionWeb">
+      <p style="margin-bottom:15px;">Nuestra grilla de programación está diseñada para acompañarte todos los días.</p>
+      
+      <p style="margin-bottom:8px;"><strong style="color:#0b1e3a; font-size:16px;">Lunes a Viernes:</strong></p>
+      <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:15px;">
+        <div><span style="color:#c9932f; font-weight:bold; display:inline-block; width:110px;">08:00 - 10:00</span> Un Nuevo Amanecer</div>
+        <div><span style="color:#c9932f; font-weight:bold; display:inline-block; width:110px;">11:00 - 13:00</span> Metanoia</div>
+        <div><span style="color:#c9932f; font-weight:bold; display:inline-block; width:110px;">15:00 - 17:00</span> Efecto Un Más</div>
+        <div><span style="color:#c9932f; font-weight:bold; display:inline-block; width:110px;">19:00 - 21:00</span> Feedback</div>
+      </div>
+      
+      <p style="margin-bottom:8px;"><strong style="color:#0b1e3a; font-size:16px;">Fines de semana:</strong></p>
+      <p>Disfrutá de <em>Mejor Que Ayer</em>, <em>El Faro</em> y nuestra selección de música y reflexión.</p>
+    </div>
   </section>
 
   <section class="extra-section" id="devocional">
     <h2>Devocional</h2>
-    <p id="txtDevocionalWeb">«Lámpara es a mis pies tu palabra, y lumbre a mi camino» (Salmo 119:105).<br><br>
-    La Palabra de Dios no ilumina todo el camino de una sola vez, sino que alumbra el siguiente paso. Hoy no te pide que veas el final, te pide que confíes en Aquel que sostiene la lámpara. Que tengas un bendecido día.</p>
+    <div id="txtDevocionalWeb">
+      <div style="background: rgba(201, 147, 47, 0.08); padding: 20px; border-radius: 12px; border-left: 4px solid #e5b95f; margin-bottom: 18px;">
+        <p style="font-family: 'Fraunces', serif; font-size: 19px; color: #0b1e3a; font-style: italic; margin: 0; line-height: 1.5;">
+          «Lámpara es a mis pies tu palabra, y lumbre a mi camino»
+        </p>
+        <span style="color: #c9932f; font-weight: 800; font-size: 12px; display: block; margin-top: 10px; letter-spacing: 1px;">— SALMO 119:105</span>
+      </div>
+      <p>La Palabra de Dios no ilumina todo el camino de una sola vez, sino que alumbra el siguiente paso. Hoy no te pide que veas el final, te pide que confíes en Aquel que sostiene la lámpara. <br><br><strong style="color:#0b1e3a;">Que tengas un bendecido día.</strong></p>
+    </div>
   </section>
 
   <p class="copyright" id="copyrightText">
