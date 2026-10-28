@@ -26,22 +26,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   padding:18px 22px;
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  justify-content:flex-end;
   max-width:640px;
   margin:0 auto;
 }
 .header-brand{
-  font-family:'Fraunces',serif;
-  font-size:22px;
-  font-weight:700;
-  letter-spacing:-.02em;
-  color:#0b1e3a;
-}
-.header-brand span{
-  background:linear-gradient(140deg,#c9932f,#e5b95f);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
+  display: none;
 }
 .header-menu{
   width:42px;
@@ -67,27 +57,19 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 }
 
 .radio-category{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:#6b7684;
-  margin-bottom:8px;
+  display: none;
 }
-.radio-category i{
-  font-style:normal;
-  color:#c9932f;
-}
+
 .radio-title{
   font-family:'Fraunces',serif;
-  font-size:32px;
-  font-weight:700;
-  letter-spacing:-.03em;
-  color:#0b1e3a;
-  margin-bottom:26px;
+  font-size: 44px;
+  font-weight: 800;
+  letter-spacing: -.04em;
+  color: #0b1e3a;
+  text-align: center;
+  margin: 10px auto 30px auto;
+  line-height: 1.1;
+  text-shadow: 0 10px 20px rgba(11,30,58,0.15);
 }
 
 .cover-card{
@@ -268,7 +250,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   font-weight:600;
 }
 
-/* ═══ SECCIONES EXTRA (MEJORADAS) ═══ */
+/* ═══ SECCIONES EXTRA ═══ */
 .extra-section{
   background:#fff;
   border-radius:20px;
@@ -474,7 +456,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 }
 
 @media (max-width:480px){
-  .radio-title{font-size:26px}
+  .radio-title{font-size: 34px;}
   .cover{width:170px;height:170px}
   .cover-card{padding:26px 20px}
   .btn-play{width:60px;height:60px}
@@ -490,7 +472,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 <body>
 
 <header class="header">
-  <div class="header-brand" id="headerBrand"><span>EL ATALAYA</span></div>
+  <div class="header-brand" id="headerBrand">EL <span>ATALAYA</span></div>
   <button class="header-menu" id="menuBtn" aria-label="Menú">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
       <path d="M4 7h16M4 12h16M4 17h16"></path>
@@ -500,7 +482,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 
 <main class="main" id="inicio">
 
-  <div class="radio-category"><i></i></div>
+  <div class="radio-category">RADIO <i>|</i></div>
   <h1 class="radio-title" id="radioName">El Atalaya Radio oficial</h1>
 
   <div class="cover-card" id="radio">
@@ -550,7 +532,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     </a>
   </div>
 
-  <!-- SECCIONES EXTRA CON DISEÑO PROFESIONAL -->
+  <!-- SECCIONES EXTRA -->
   <section class="extra-section" id="noticias">
     <h2>Noticias</h2>
     <div id="txtNoticiasWeb">
@@ -603,7 +585,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <div class="sp-info">
     <div class="sp-label">Estás escuchando</div>
     <div class="sp-title" id="spTitle">El Atalaya Radio</div>
-    <div class="sp-sub" id="spSub"></div>
+    <div class="sp-sub" id="spSub">Cargando información...</div>
   </div>
   <button class="sp-play" id="stickyPlay" aria-label="Reproducir">
     <svg class="ic-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.2v13.6L19 12z"></path></svg>
@@ -763,7 +745,74 @@ function showToast(msg){
   toastTimeout = setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-/* ═══════════ CARGA CONFIG DEL ADMIN (ACTUALIZADO A innerHTML) ═══════════ */
+/* ═══════════ INFO ACTUAL DE LA RADIO DESDE LA API ═══════════ */
+function extraerTextoInfo(data){
+  if (data == null) return '';
+  if (typeof data === 'string') return data.trim();
+  if (typeof data !== 'object') return String(data).trim();
+
+  const base = (data.data && typeof data.data === 'object') ? data.data : data;
+
+  const pick = (...keys) => {
+    for (const k of keys) {
+      if (base[k] !== undefined && base[k] !== null && String(base[k]).trim() !== '') {
+        return String(base[k]).trim();
+      }
+    }
+    return '';
+  };
+
+  const artista = pick('artist', 'artista', 'author', 'song_artist', 'interpret');
+  const titulo = pick('title', 'titulo', 'song_title', 'songtitle', 'song', 'name', 'track');
+
+  if (artista && titulo) {
+    if (titulo.toLowerCase().includes(artista.toLowerCase())) return titulo;
+    return artista + ' - ' + titulo;
+  }
+  if (titulo) return titulo;
+
+  const info = pick('info', 'text', 'message', 'current', 'now_playing', 'nowplaying');
+  if (info) return info;
+
+  return '';
+}
+
+async function actualizarInfoRadio(){
+  const el = document.getElementById('spSub');
+  if (!el) return;
+
+  try {
+    const res = await fetch('https://radiohost.com.ar/cp/get_info.php?p=8012&_=' + Date.now(), {
+      cache: 'no-store'
+    });
+
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+
+    const textoResp = await res.text();
+    let data;
+
+    try {
+      data = JSON.parse(textoResp);
+    } catch (e) {
+      data = textoResp;
+    }
+
+    const texto = extraerTextoInfo(data);
+
+    if (texto) {
+      el.textContent = texto;
+    } else {
+      el.textContent = 'Información no disponible';
+    }
+  } catch (e) {
+    el.textContent = 'No se pudo cargar la info';
+  }
+}
+
+actualizarInfoRadio();
+setInterval(actualizarInfoRadio, 30000);
+
+/* ═══════════ CARGA CONFIG DEL ADMIN ═══════════ */
 (async function cargarConfig(){
   try {
     const res = await fetch('atalaya-config.json?_=' + Date.now(), { cache: 'no-store' });
@@ -786,7 +835,6 @@ function showToast(msg){
         }
         if (cfg.general.tagline){
           document.getElementById('radioSubtitle').textContent = cfg.general.tagline;
-          document.getElementById('spSub').textContent = cfg.general.tagline + ' · Cipolletti';
         }
         if (cfg.general.logo){
           document.getElementById('coverImg').src = cfg.general.logo;
