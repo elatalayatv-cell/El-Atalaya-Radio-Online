@@ -498,7 +498,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   </div>
 
   <!-- Redes sociales con IDs para el panel -->
-  <div class="socials">
+  <div class="socials" id="socialsSection">
     <a href="https://www.facebook.com/elatalayaradio" target="_blank" rel="noopener" aria-label="Facebook" id="linkFb">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"></path></svg>
     </a>
@@ -546,18 +546,20 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
     </button>
   </div>
-  <ul class="menu-list">
-    <li><a href="index.html">
+  <!-- EL MENÚ AHORA TIENE ID PARA PODER SER CAMBIADO DESDE EL ADMIN -->
+  <ul class="menu-list" id="dynamicMenu">
+    <!-- Los items se cargan por defecto, pero el script puede sobreescribirlos -->
+    <li><a href="index.html" class="active">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12 12 3l9 9M5 10v10h14V10"></path></svg>
-      Página principal
+      Inicio
     </a></li>
-    <li><a href="radio.html" class="active">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4.5 9.5a10 10 0 0 1 15 0M7.5 12.5a6 6 0 0 1 9 0M10.5 15.5a2.5 2.5 0 0 1 3 0"></path><circle cx="12" cy="18.5" r="1.3" fill="currentColor"></circle></svg>
-      Radio en vivo
+    <li><a href="#socialsSection">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+      Redes Sociales
     </a></li>
-    <li><a href="EL ATALAYA TV.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2.5" y="6" width="19" height="13" rx="2.5"></rect><path d="m8 3 4 3 4-3"></path></svg>
-      TV en vivo
+    <li><a href="https://wa.me/5492995932329" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.1 14c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.7-1.2-4.5-4-4.6-4.2-.1-.2-1.1-1.4-1.1-2.7s.7-1.9.9-2.2c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.1.3.6 1.1 1.4 1.8 1 .8 1.7 1.1 2 1.2.3.1.4.1.6-.1l.8-.9c.2-.2.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.8-.1 1.4z"></path></svg>
+      Contacto
     </a></li>
   </ul>
 </aside>
@@ -569,7 +571,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 </audio>
 
 <script>
-// Variables globales para que se actualicen desde el JSON
 let STREAM_URL = 'https://radiohost.com.ar/8012/stream';
 let RADIO_NAME = 'El Atalaya Radio oficial';
 
@@ -584,7 +585,7 @@ let playing = false;
 
 function togglePlay(){
   if (!playing){
-    audio.src = STREAM_URL; // Usa la URL actualizada
+    audio.src = STREAM_URL;
     audio.load();
     const p = audio.play();
     if (p !== undefined){
@@ -667,21 +668,19 @@ function showToast(msg){
   toastTimeout = setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-/* ═══════════ CARGA CONFIG DEL ADMIN (ACTUALIZADO) ═══════════ */
+/* ═══════════ CARGA CONFIG DEL ADMIN ═══════════ */
 (async function cargarConfig(){
   try {
     const res = await fetch('atalaya-config.json?_=' + Date.now(), { cache: 'no-store' });
     if (res.ok){
       const cfg = await res.json();
       
-      // 1. Datos Generales
       if (cfg.general){
         if (cfg.general.siteName){
           RADIO_NAME = cfg.general.siteName;
           document.getElementById('radioName').textContent = RADIO_NAME;
           document.getElementById('spTitle').textContent = RADIO_NAME;
           document.title = RADIO_NAME + ' — Escuchar en vivo';
-          // Actualizar logo del header
           const parts = RADIO_NAME.split(' ');
           if(parts.length > 1) {
              document.getElementById('headerBrand').innerHTML = parts[0].toUpperCase() + ' <span>' + parts.slice(1).join(' ').toUpperCase() + '</span>';
@@ -701,19 +700,22 @@ function showToast(msg){
         }
       }
 
-      // 2. Stream
       if (cfg.streams && cfg.streams.radioUrl){
         STREAM_URL = cfg.streams.radioUrl;
         document.querySelector('#radioAudio source').src = STREAM_URL;
       }
 
-      // 3. Redes Sociales
       if (cfg.redes){
         if (cfg.redes.facebook) document.getElementById('linkFb').href = cfg.redes.facebook;
         if (cfg.redes.instagram) document.getElementById('linkIg').href = cfg.redes.instagram;
         if (cfg.redes.tiktok) document.getElementById('linkTt').href = cfg.redes.tiktok;
         if (cfg.redes.youtube) document.getElementById('linkYt').href = cfg.redes.youtube;
-        if (cfg.redes.whatsapp) document.getElementById('linkWa').href = 'https://wa.me/' + cfg.redes.whatsapp;
+        if (cfg.redes.whatsapp) {
+          document.getElementById('linkWa').href = 'https://wa.me/' + cfg.redes.whatsapp;
+          // También actualizamos el enlace de "Contacto" del menú dinámico
+          const contactLink = document.querySelector('#dynamicMenu a[href^="https://wa.me"]');
+          if(contactLink) contactLink.href = 'https://wa.me/' + cfg.redes.whatsapp;
+        }
       }
       
       console.log('✅ Configuración cargada desde el Admin');
