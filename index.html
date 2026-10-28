@@ -6,6 +6,8 @@
 <title>El Atalaya— Escuchar en vivo</title>
 <meta name="description" content="Escuchá Radio oficial en vivo. Radio TV Pentecostal Cipolletti.">
 <link rel="icon" type="image/png" href="https://i.postimg.cc/bY3YDMC5/Radial-El-Atalaya.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#c9932f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -875,6 +877,13 @@ setInterval(actualizarInfoRadio, 30000);
     console.log('⚠️ Usando configuración por defecto');
   }
 })();
+
+/* ═══════════ SERVICE WORKER (PARA PWABUILDER / PWA) ═══════════ */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
 </script>
 </body>
 </html>
