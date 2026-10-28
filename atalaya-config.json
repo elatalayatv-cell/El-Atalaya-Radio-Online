@@ -6,13 +6,11 @@
   },
   "streams": {
     "radioUrl": "https://radiohost.com.ar/8012/stream",
-    "tvUrl": "EL ATALAYA TV.html"
+    "tvUrl": "tv.html"
   },
-  "redes": {
-    "facebook": "https://www.facebook.com/elatalayaradio",
-    "instagram": "https://www.instagram.com/elatalayaradio",
-    "tiktok": "https://www.tiktok.com/@elatalayaradio",
-    "youtube": "https://www.youtube.com/@elatalayaradio",
-    "whatsapp": "5492995932329"
+  "contenido": {
+    "noticias": "",
+    "programacion": "",
+    "devocional": ""
   }
 }
