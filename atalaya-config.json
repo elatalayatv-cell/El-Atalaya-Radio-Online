@@ -6,7 +6,7 @@
   },
   "streams": {
     "radioUrl": "https://radiohost.com.ar/8012/stream",
-    "tvUrl": ""
+    "tvUrl": "<iframe src=\"https://stmv5.liveplushd.com.br/elatalaya/elatalaya/playlist.m3u8/tv/index.html\"></iframe>"
   },
   "contenido": {
     "noticias": "",
