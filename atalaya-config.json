@@ -1,16 +1,18 @@
 {
   "general": {
-    "siteName": "El Atalaya Radio oficial",
+    "siteName": "EL ATALAYA RADIO ONLINE",
     "tagline": "Radio TV Pentecostal",
-    "logo": "https://i.postimg.cc/bY3YDMC5/Radial-El-Atalaya.png"
+    "logo": "https://i.postimg.cc/s2kns3x0/Emblema-dorado-de-radio-online-misava-removebg-preview.png"
   },
   "streams": {
     "radioUrl": "https://radiohost.com.ar/8012/stream",
-    "tvUrl": "tv.html"
+    "tvUrl": "EL ATALAYA TV.html"
   },
-  "contenido": {
-    "noticias": "Bienvenidos a la sección de noticias de El Atalaya. Aquí encontrarás las últimas novedades de nuestra comunidad, eventos, campañas y todo lo que necesitás saber para mantenerte informado. ¡Muy pronto estaremos actualizando esta sección con contenido en vivo!",
-    "programacion": "Nuestra grilla de programación está diseñada para acompañarte todos los días.\nLunes a Viernes: De 8:00 a 10:00 hs Un Nuevo Amanecer, de 11:00 a 13:00 hs Metanoia, y por la tarde Efecto Un Más y Feedback.\nFines de semana: Disfrutá de Mejor Que Ayer, El Faro y nuestra selección de música y reflexión.\"",
-    "devocional": ""
+  "redes": {
+    "facebook": "https://www.facebook.com/elatalayaradio",
+    "instagram": "https://www.instagram.com/elatalayaradio",
+    "tiktok": "https://www.tiktok.com/@elatalayaradio",
+    "youtube": "https://www.youtube.com/@elatalayaradio",
+    "whatsapp": "5492995932329"
   }
 }
