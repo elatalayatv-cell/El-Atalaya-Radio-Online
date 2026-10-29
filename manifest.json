@@ -1,17 +1,32 @@
- {
-  "general": {
-    "siteName": "EL ATALAYA RADIO ONLINE",
-   "description": "Radio y TV online Pentecostal desde Cipolletti, Argentina. La Estacion Que Te Bendice.",
-    "tagline": "Radio TV Pentecostal",
-    "logo": "https://i.postimg.cc/s2kns3x0/Emblema-dorado-de-radio-online-misava-removebg-preview.png"
-  },
-  "streams": {
-    "radioUrl": "https://radiohost.com.ar/8012/stream",
-    "tvUrl": "tv.html"
-  },
-  "contenido": {
-    "noticias": "",
-    "programacion": "",
-    "devocional": ""
-  }
+{
+  "name": "EL ATALAYA RADIO ONLINE",
+  "short_name": "El Atalaya",
+  "description": "Radio y TV online Pentecostal desde Cipolletti, Argentina. La Estacion Que Te Bendice.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eef1f6",
+  "theme_color": "#c9932f",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "https://i.postimg.cc/s2kns3x0/Emblema-dorado-de-radio-online-misava-removebg-preview.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://i.postimg.cc/s2kns3x0/Emblema-dorado-de-radio-online-misava-removebg-preview.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://i.postimg.cc/s2kns3x0/Emblema-dorado-de-radio-online-misava-removebg-preview.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
 }
