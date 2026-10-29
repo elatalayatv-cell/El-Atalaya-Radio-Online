@@ -106,7 +106,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .cover img{
   width:100%;
   height:100%;
-  object-fit:cover;
+  object-fit:contain; /* Cambiamos cover por contain */
+  padding: 12px; /* Le da un margen para que el logo no toque el borde */
   display:block;
 }
 .cover.playing{
